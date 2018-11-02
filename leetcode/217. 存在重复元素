@@ -1,0 +1,31 @@
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+       set<int> a;
+        for(int i=0;i<nums.size();i++)
+        {
+            a.insert(nums[i]);
+        }
+
+        return a.size() != nums.size();
+
+
+
+
+    }
+};
+
+class Solution2 {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        for (int i = 1; i < nums.size(); i++)
+        {
+            if(nums[i-1] == nums[i])
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+};
