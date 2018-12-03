@@ -1,0 +1,11 @@
+class Solution {
+public:
+    bool canWinNim(int n) {
+        if(n%4 == 0)
+        {
+            return false;
+        }
+    }
+};
+
+ 找规律，到谁哪里，剩着四个谁就输，问题分解，如果有7个，那就想办法给对手剩下4个，这样他就输了，每四个一组，可以推广到更大的数。
