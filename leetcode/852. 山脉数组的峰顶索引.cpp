@@ -1,18 +1,41 @@
-class Solution {
+lass Solution {
 public:
     int peakIndexInMountainArray(vector<int>& A) {
-        int max=0;
-        int index;
-        for(int i=0;i<A.size();i++)
+        int low =0;
+        int high = A.size()-1;
+        int mid;
+        
+        while(low<=high)
         {
-            if(A[i] > max)
+            mid = (low+high)/2;
+            if(A[mid]>=A[mid-1] && A[mid]>=A[mid+1])
             {
-                max = A[i];
-                index = i;
+                return mid;
+            }
+            else if(A[mid] < A[mid-1])
+            {
+                high = mid - 1;
+            }
+            else
+            {
+                low = mid + 1;
             }
             
         }
-        return index;
+        return 0;
+  
+//         int max=0;
+//         int index;
+//         for(int i=0;i<A.size();i++)
+//         {
+//             if(A[i] > max)
+//             {
+//                 max = A[i];
+//                 index = i;
+//             }
+            
+//         }
+//         return index;
         
         
         
