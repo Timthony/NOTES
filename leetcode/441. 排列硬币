@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int arrangeCoins(int n) {
+        //直接搜索
+//         if(n == 0)
+//         {
+//             return 0;
+//         }
+//         for(long k = 1; k <= n;k++)
+//         {
+//             if(k*(1+k)/2 <= n && (k+1)*(k+2)/2 > n)
+//             {
+//                 return k;
+//             }
+//         }
+//         return 0;
+        
+        //二分搜索
+        if(n == 0)
+        {
+            return 0;
+        }
+        int low = 1;
+        int high = n;
+        while(low <= high)
+        {
+            long mid = low + (high-low)/2;
+            long sum = (mid+1)*mid/2;
+            if(sum <= n)
+            {
+                low = mid +1;
+            }
+            else
+            {
+                high = mid -1;
+            }
+        }
+        return low-1;
+     
+        
+    }
+};
