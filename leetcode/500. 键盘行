@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<string> findWords(vector<string>& words) {
+        //无序集合
+        unordered_set<char> row1 {'q', 'w', 'e', 'r', 't', 'y','u', 'i', 'o', 'p'};
+        unordered_set<char> row2 {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'}; 
+        unordered_set<char> row3 { 'z', 'x', 'c', 'v', 'b' ,'n', 'm'};
+        vector<unordered_set<char>> rows {row1, row2, row3};
+        
+        
+        vector<string> validWords;
+        for(int i=0; i<words.size(); ++i){
+            int row=0;
+            
+            for(int k=0; k<3; ++k){
+                if(rows[k].count((char)tolower(words[i][0])) > 0) row = k;
+            }
+            
+            validWords.push_back(words[i]);//先入栈
+            for(int j=1; j<words[i].size(); ++j){
+                if(rows[row].count((char)tolower(words[i][j])) == 0){
+                    validWords.pop_back();//如果这一行有不存在的字母，就把它出栈，结束循环
+                    break;
+                }
+            }
+            
+        }
+        return validWords;
+
+
+        
+        
+        
+        
+    }
+};
