@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+//         //构建map解决
+//         map<int, int> m;
+//         for(int i=0;i<nums.size();i++)
+//         {
+//             ++m[nums[i]];
+//         }
+        
+//         for(int j=0;j<nums.size();j++)
+//         {
+//             if(m[nums[j]] == 1)
+//             {
+//                 return nums[j];
+//             }
+            
+//         }
+        
+
+        //与0相∧，保留原值,,,,,与自己相∧，值为0
+        //所有的值都进行异或操作后只剩下只出现一次的值，剩下的都两两异或为0了
+        int res=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            res = res^nums[i];
+        }
+        return res;
+        
+    }
+};
