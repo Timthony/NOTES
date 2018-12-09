@@ -1,0 +1,95 @@
+class Solution {
+public:
+    
+//     void quick_sort(vector<int>& nums,int n)
+//     {
+//         quick_sort_c(A, 0, n-1);
+//     }
+    
+//     void quick_sort_c(vector<int>& nums, int p, int r)
+//     {
+//         if(p>=r)
+//         {
+//             return;
+//         }
+//         q = partition(A, p, r);
+//         qucik_sort_c(A, p, q-1);
+//         quick_sort_c(A, q+1, r);
+//     }
+    
+//     int partition(A, p, r)
+//     {
+//         int i = p;
+//         int pivot = A[r];
+//         for(int j =0;j<r;j++)
+//         {
+//             if(A[j] < pivot)
+//             {
+//                 int temp = nums[i];
+//                 nums[i] = nums[j];
+//                 nums[j] = temp;
+//                 i++;
+//             }
+//         }
+//         int temp1 = nums[i];
+//         nums[i] = nums[r];
+//         nums[r] = temp1;
+//         return i;
+//     }
+    
+    int getRes(vector<int> &nums, int k, int left, int right)
+    {
+        int tmp = nums[left];
+        int n = nums.size();
+        int tleft = left;
+        int tright = right;
+        
+        while(left < right)
+        {
+            while(right > left && nums[right]>tmp)
+            {
+                right--;
+            }
+            if(right > left)
+            {
+                nums[left++] = nums[right];
+            }
+            while(left<right && nums[left] <= tmp)
+            {
+                left++;
+            }
+            if(left < right)
+            {
+                nums[right--] = nums[left];
+            }
+        }
+        nums[left] = tmp;
+        if(left == n-k) return tmp;
+        
+        else if(left < n-k) return getRes(nums, k, left+1, tright);
+        else return getRes(nums, k, tleft, left-1);
+
+        
+    }
+    
+    
+    
+    int findKthLargest(vector<int>& nums, int k) {
+        //第二种方法：快速排序找，取最后一个元素为pivot，划分区间nums[0, p-1] nums[p] nums[p+1, r]
+        //如果K == P+1，那么nums[p]=第K大的数。
+        //如果K > p+1,那么就在nums[p+1,r]查找
+        //如果K < p+1,那么就在nums[0,p-1]区间查找
+        
+        int n = nums.size();
+        return getRes(nums,k,0,n-1);
+        
+ 
+        //第一种方法：直接用排序，然后取第K大
+        sort(nums.begin(), nums.end());  //从小到大
+        return nums[nums.size()-k];
+        
+
+        
+        
+    }
+};
