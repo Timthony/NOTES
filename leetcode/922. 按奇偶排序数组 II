@@ -1,0 +1,28 @@
+思路：偶数位为偶数，奇数位为奇数    
+创建一个新数组，遍历原数组，为偶数则放到新数组的偶数位，为奇数，则放到新数组的奇数位    
+
+class Solution {
+public:
+    vector<int> sortArrayByParityII(vector<int>& A) {
+        int n = A.size();
+        vector<int> res(n);
+        //先把原来容器内的偶数取出来放在res的偶数位
+        int t = 0;
+        int j = 1;
+        for(int i=0;i<n;i++)
+        {
+            if(A[i]%2 == 0)
+            {
+                res[t] = A[i];
+                t = t+2;
+            }
+            else
+            {
+                res[j] = A[i];
+                j = j+2;
+            }
+        }
+        return res;
+    }
+        
+};
