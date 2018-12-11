@@ -1,0 +1,58 @@
+/**
+*  struct ListNode {
+*        int val;
+*        struct ListNode *next;
+*        ListNode(int x) :
+*              val(x), next(NULL) {
+*        }
+*  };
+*/
+class Solution {
+public:
+    vector<int> res; //必须定义在递归循环外，否则每次递归都初始化一次，值就被清空了
+    vector<int> printListFromTailToHead(ListNode* head) {
+        //方法1，使用递归
+        //vector<int> res;//递归的时候这个函数每次都初始化一次，清空了。
+        if(head != nullptr)
+        {
+            if(head->next != nullptr)
+            {
+                printListFromTailToHead(head->next);
+            }
+            res.push_back(head->val);
+        }
+        return res;
+       
+        //方法2，使用栈
+        /**
+        stack<ListNode*> s;
+        vector<int> res;
+        if(head == nullptr)
+        {
+            return res;
+        }
+        ListNode* pNode = head;
+        while(pNode != nullptr)
+        {
+            s.push(pNode);
+            pNode=pNode->next;
+        }
+        ListNode *t;
+        while(!s.empty())
+        {
+            t = s.top();
+            res.push_back(t->val);
+            s.pop();
+        }
+        return res;
+        */
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+};
