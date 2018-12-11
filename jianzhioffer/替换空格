@@ -1,0 +1,46 @@
+class Solution {
+public:
+	void replaceSpace(char *str,int length) {
+        if(str == NULL || length < 0)
+        {
+            return;
+        }
+        int oldlen = 0;
+        int spacenum = 0;
+        int i=0;
+        while(str[i] != '\0')
+        {
+            oldlen++;
+            if(str[i] == ' ')
+            {
+                spacenum++;
+            }
+            i++;
+        }
+        int newlen = oldlen + 2*spacenum;
+        int low = oldlen;//指向原字符串的末尾
+        int high = newlen;//指向新字符串的末尾，倒序
+        while(low != high)
+        {
+            if(str[low] != ' ')
+            {
+                //复制这个值到最后
+                str[high] = str[low];
+                high--;
+                low--;
+            }
+            else
+            {
+                str[high] = '0';
+                str[high - 1] = '2';
+                str[high - 2] = '%';
+                high = high - 3;
+                low--;
+            }
+        }
+        
+        return;
+
+
+	}
+};
