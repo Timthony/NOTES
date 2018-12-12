@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        
+
+        int res=1;
+        set<char> t;
+        int i=0;//
+        int j=0;//表示从下标j开始计数
+        if(s.size() == 0)
+        {
+            return 0;
+        }
+        
+        while(i < s.size())
+        {
+            if(t.count(s[i]) == 0)
+            {
+                t.insert(s[i]);
+                i++;
+            }
+            else
+            {
+                if(t.size() > res)
+                {
+                    res = t.size();
+                }
+                j++;
+                i = j;
+                t.clear();
+            }
+        }
+
+        return res = res>t.size() ? res:t.size();
+
+    }
+};
