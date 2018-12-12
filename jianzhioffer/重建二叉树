@@ -1,0 +1,58 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+//递归思想，每次将左右两棵子树当成新的子树进行处理。
+//前序的第一个索引就是根节点，在中序数组中找到根节点的位置gen，gen的左边是左子树，右边是右子树。
+//进而得到中序遍历的左右子树的两个数组left.vin, right.vin。前序数组的左子树长度为gen+1,可以得到前序遍历的左右子树的数组。
+//对上述前序和中序得到的左右子树的数组分别进行二叉树重建，递归求解，递归一次，返回一次根节点。
+// 直到数组长度为1，说明左右子树只有一个节点，叶节点，二叉树整理完毕，不用递归建树，直接返回该叶节点，递归结束。
+class Solution {
+public:
+    TreeNode* reConstructBinaryTree(vector<int> pre,vector<int> vin) {
+        int inlen = vin.size();
+        if(inlen == 0)
+        {
+            return NULL;
+        }
+        vector<int> left_pre, right_pre, left_in, right_in;
+        TreeNode* head = new TreeNode(pre[0]);//创建根节点，前序遍历的第一个数
+        int gen;
+        //找到中序遍历中根节点的位置
+        for(int i=0;i<inlen;i++)
+        {
+            if(vin[i] == pre[0])
+            {
+                gen = i;
+                break;
+            }
+        }
+        //对于中序遍历，根节点左边的节点位于二叉树的左边，根节点右边的节点位于二叉树的右边
+        //利用上述的节点，对二叉树进行重建
+        for(int i=0;i<gen;i++)
+        {
+            left_in.push_back(vin[i]);
+            left_pre.push_back(pre[i+1]);//前序遍历先遍历根节点，然后左节点
+        }
+        for(int i=gen+1;i<inlen;i++)
+        {
+            right_in.push_back(vin[i]);
+            right_pre.push_back(pre[i]);
+        }
+        head->left=reConstructBinaryTree(left_pre, left_in);
+        head->right=reConstructBinaryTree(right_pre, right_in);
+        return head;
+        
+        
+        
+        
+        
+
+    }
+};
