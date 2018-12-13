@@ -1,0 +1,31 @@
+//一定注意stack.pop()只是删除栈顶的元素，并不返回栈顶元素的值，要返回栈顶元素的值，还是要用stack.top().
+class Solution
+{
+public:
+    void push(int node) {
+        //在stack2中出栈，在stack1中入栈，如果stack2为空，则将stack1出栈进入stack2
+        //队列push，先进入stack1，然后出栈进入stack2
+        stack1.push(node);
+        //必须在stack2为空的时候入栈stack2
+    }
+
+    int pop() {
+        //出栈之前保证stack1为空
+        if(stack2.empty())
+        {
+            while(!stack1.empty())
+           {
+                int temp = stack1.top();
+                stack2.push(temp);
+                stack1.pop();
+            }
+        }
+        int res = stack2.top();
+        stack2.pop();
+        return res;
+    }
+
+private:
+    stack<int> stack1;
+    stack<int> stack2;
+};
