@@ -1,0 +1,15 @@
+class Solution {
+public:
+    //归纳可得规律，f(n) = 2*f(n-1)
+    int jumpFloorII(int number) {
+        if(number < 0)
+        {
+            return -1;
+        }
+        if(number == 1 || number == 2)
+        {
+            return number;
+        }
+        return 2*jumpFloorII(number-1);
+    }
+};
