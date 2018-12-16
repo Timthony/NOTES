@@ -1,0 +1,42 @@
+class Solution {
+public:
+    //f(n) = f(n-1) + f(n-1)
+    int Fibonacci(int n) {
+        //第一种递归方法，不通过，时间太长，栈溢出，重复计算太多
+        /*
+        if(n==1)
+        {
+            return 1;
+        }
+        if(n<=0)
+        {
+            return 0;
+        }
+        return Fibonacci(n-1) + Fibonacci(n-2);
+        */
+        //第二种方法，自上而下递归分析，自下而上循环解决
+        if(n<=0)
+        {
+            return 0;
+        }
+        if(n == 1)
+        {
+            return 1;
+        }
+        int curnum=0;  //计算的和 , f(2) = f(0)+f(1)
+        int numfn1 = 0;  //每次计算f(min)  ,f(0)
+        int numfn2 = 1;  //每次计算法f(max),  f(1)
+        //先计算f(2)=f(0)+f(1),然后计算f(3) = f(1) + f(2)，
+        //也就是f(min)等于上一次的f(max)，这次的f(max)为上一轮计算的结果curnum
+        for(int i=2;i<=n;i++)
+        {
+            curnum = numfn1 + numfn2;
+            numfn1 = numfn2;
+            numfn2 = curnum;
+        }
+        return curnum;
+        
+        
+
+    }
+};
