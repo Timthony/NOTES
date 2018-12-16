@@ -40,7 +40,10 @@ int maxProduct(int length)
 
 
 //贪婪算法
-
+//尽可能都分成3为一份，除了长度是4的情况，这样最大
+//6，3，3
+//8, 3,3,2
+//7，3，2，2
 int maxProduct(int length)
 {
     if(length < 2)
@@ -64,13 +67,6 @@ int maxProduct(int length)
     int timesOf2 = (length - timesOf3*3)/2;
     
     return (int)(pow(3, timesOf3) * (int)(pow(2, timesOf2)));
-    
-    
-    
-    
-    
-    
-    
-    
+
 }
 
