@@ -1,0 +1,41 @@
+/*
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+			val(x), next(NULL) {
+	}
+};*/
+class Solution {
+public:
+    ListNode* ReverseList(ListNode* pHead) {
+        //普通解法
+        if(pHead == nullptr)
+        {
+            return nullptr;
+        }
+        ListNode *pPrev = nullptr;
+        ListNode *pNode = pHead;
+        ListNode *pNext = nullptr;
+        ListNode *reverseHead = nullptr;
+        while(pNode != nullptr)
+        {
+            pNext = pNode->next;
+            //尾节点，保存当前的值到翻转后的头结点
+            if(pNext == nullptr)
+            {
+                reverseHead = pNode;
+            }
+            pNode->next = pPrev;
+            pPrev = pNode;
+            pNode = pNext;
+        }
+        return reverseHead;      
+        //递归解法
+        
+        
+        
+        
+        
+    }
+};
