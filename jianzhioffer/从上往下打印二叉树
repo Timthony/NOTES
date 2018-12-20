@@ -1,0 +1,47 @@
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+    vector<int> PrintFromTopToBottom(TreeNode* root) {
+        vector<int> res;
+        if(root == nullptr)
+        {
+            return res;
+        }
+        //层序遍历使用队列来辅助
+        queue<TreeNode*> que;
+        que.push(root);
+        
+        while(!que.empty())
+        {
+ 
+            int size = que.size();
+            
+            while(size--)
+            {
+                TreeNode *temp = que.front();
+                res.push_back(temp->val);
+                que.pop();
+                if(temp->left)
+                {
+                    que.push(temp->left);
+                }
+                if(temp->right)
+                {
+                    que.push(temp->right);
+                }
+            }
+
+        }
+        return res;
+
+
+    }
+};
