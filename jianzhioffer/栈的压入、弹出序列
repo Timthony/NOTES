@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool IsPopOrder(vector<int> pushV,vector<int> popV) {
+        ///判断边界条件等特殊情况
+        if(pushV.size() == 0 || popV.size() == 0)
+        {
+            return false;
+        }
+
+        //对于弹出序列，每次出栈，那么先按照原始栈入栈顺序，不断入栈直到等于弹出序列要出栈的那个元素
+        //弹出序列第二次出栈，先判断弹出序列的栈顶是不是等于原始序列的栈顶，相等，则都出栈，
+        //不相等，则原始栈继续按照入栈序列入栈，直到栈顶等于弹出序列要弹出的元素
+        //直到入栈序列到空都没匹配到弹出序列的栈顶元素，那么不匹配
+        stack<int> stack_temp;
+        stack_temp.push(pushV[0]);
+        int j = 0;//出栈序列的序号
+        int i = 0; //入栈序号
+        
+        while(i < pushV.size())
+        {
+            while(stack_temp.top() != popV[j])
+            {
+                i++;
+                if(i >= pushV.size())
+                {
+                    return false;
+                }
+                stack_temp.push(pushV[i]);
+            }
+            while(stack_temp.top() == popV[j])
+            {
+                stack_temp.pop();
+                j++;
+                if(j == popV.size())
+                {
+                    return true;
+                }
+            }
+            
+        }
+        return false;
+    }
+};
