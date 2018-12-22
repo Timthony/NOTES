@@ -1,0 +1,53 @@
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};
+*/
+class Solution {
+public:
+        vector<vector<int> > Print(TreeNode* pRoot) {
+            vector<vector<int>> res;
+            if(pRoot == nullptr)
+            {
+                return res;
+            }
+            
+            queue<TreeNode*> que;
+            
+            que.push(pRoot);
+            
+            while(!que.empty())
+            {
+                int size = que.size();
+                vector<int> cengTemp;
+                for(int i = 1;i<=size;i++)
+                {
+                    cengTemp.push_back(que.front()->val);
+                    if(que.front()->left)
+                    {
+                        que.push(que.front()->left);
+                    }
+                    if(que.front()->right)
+                    {
+                        que.push(que.front()->right);
+                    }
+                    que.pop();
+                }
+                res.push_back(cengTemp);
+            }
+            return res;
+            
+            
+            
+            
+            
+            
+        
+        }
+    
+};
