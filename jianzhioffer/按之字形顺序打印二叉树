@@ -1,0 +1,80 @@
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};
+*/
+class Solution {
+public:
+    vector<vector<int> > Print(TreeNode* pRoot) {
+        vector<vector<int>> res;
+        if(pRoot == nullptr)
+        {
+            return res;
+        }
+        stack<TreeNode*> stack1;
+        stack<TreeNode*> stack2;
+        
+        stack1.push(pRoot);
+        vector<int> cengTemp;
+        int cur=1;//stack1当前是奇数层还是偶数层
+        while(!stack1.empty())
+        {
+            if(cur%2 == 1)
+            {
+                if(stack1.top()->left)
+                {
+                    stack2.push(stack1.top()->left);
+                }
+                if(stack1.top()->right)
+                {
+                    stack2.push(stack1.top()->right);
+                } 
+                cengTemp.push_back(stack1.top()->val);
+                stack1.pop();
+            }
+            if(cur%2 == 0)
+            {
+                if(stack1.top()->right)
+                {
+                    stack2.push(stack1.top()->right);
+                } 
+                if(stack1.top()->left)
+                {
+                    stack2.push(stack1.top()->left);
+                } 
+                cengTemp.push_back(stack1.top()->val);
+                stack1.pop();
+            }
+            
+            if(stack1.empty())
+            {
+                res.push_back(cengTemp);
+                swap(stack1, stack2);//交换stack1，Stack2，stack2就为空了，循stack1不为空，循环继续执行
+                cengTemp.clear();
+                cur++;
+            }
+        }
+        return res;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+};
