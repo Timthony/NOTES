@@ -1,0 +1,74 @@
+/*
+struct RandomListNode {
+    int label;
+    struct RandomListNode *next, *random;
+    RandomListNode(int x) :
+            label(x), next(NULL), random(NULL) {
+    }
+};
+*/
+class Solution {
+public:
+    RandomListNode* Clone(RandomListNode* pHead)
+    {
+        CloneNodes(pHead);
+        ConnectSiblingNodes(pHead);
+        return ReconnectNodes(pHead);
+        
+    }
+    //第一步，复制next指向的节点,新节点连接复制节点的后面，原始链表节点N，复制出N1，连接到N的后面
+    
+    void CloneNodes(RandomListNode* pHead)
+    {
+        RandomListNode* pNode = pHead;
+        while(pNode != nullptr)
+        {
+            RandomListNode *pcloned = new RandomListNode(NULL);
+            pcloned->label = pNode->label;
+            pcloned->next = pNode->next;
+            pcloned->random = nullptr;
+            
+            pNode->next = pcloned;
+            pNode = pcloned->next;
+        }
+    }
+    
+    //第二步，复制复制出来的节点的random，如果原始链表N的random指向s，那么复制出来的N1指向的s1同样是s的下一个节点。
+    void ConnectSiblingNodes(RandomListNode *pHead)
+    {
+        RandomListNode *pNode = pHead;
+        while(pNode != nullptr)
+        {
+            RandomListNode *pcloned = pNode->next;
+            if(pNode->random != nullptr)
+            {
+                pcloned->random = pNode->random->next;
+            }
+            pNode = pcloned->next;
+        }
+    }
+    //第三步，把长链表拆分为两个，奇数位的为原始链表，偶数位为复制出来的链表
+    RandomListNode *ReconnectNodes(RandomListNode *pHead)
+    {
+        RandomListNode *pNode = pHead;
+        RandomListNode *pclonedHead = nullptr;
+        RandomListNode *pclonedNode = nullptr;
+        
+        if(pNode != nullptr)
+        {
+            pclonedHead = pclonedNode = pNode->next;
+            pNode->next = pclonedNode->next;
+            pNode = pNode->next;
+        }
+        while(pNode != nullptr)
+        {
+            pclonedNode->next = pNode->next;
+            pclonedNode = pNode->next;
+            pNode->next = pclonedNode->next;
+            pNode = pNode->next;
+        }
+        return pclonedHead;
+    }
+    
+
+};
