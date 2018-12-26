@@ -1,0 +1,122 @@
+class Solution {
+public:
+    vector<int> GetLeastNumbers_Solution(vector<int> input, int k) {
+        //第三种方法：使用树结构容器multiset保存k个数，每次都和这个容器内的最大值比，如果比最大值小，就删掉最大值，替换为新数，适合海量数据的处理
+        //时间复杂度：O（nlogk）
+        vector<int> res;
+        int len = input.size();
+        if(len == 0 || k > len)    return res;
+        multiset<int, greater<int>> intSet; //从大到小排序
+        vector<int>::iterator vec_it = input.begin();
+        for(;vec_it != input.end();vec_it++)
+        {
+            if(intSet.size() < k)
+            {
+                intSet.insert(*vec_it);
+            }
+            else{
+                //第一个元素是最大值
+                multiset<int, greater<int>>::iterator greatest_it = intSet.begin();
+                //如果后续的元素小于最大值，那么删除最大值，加入当前元素
+                if(*vec_it < *(intSet.begin()))
+                {
+                    intSet.erase(greatest_it);
+                    intSet.insert(*vec_it);
+                }
+                
+                
+            }
+        }
+        res = vector<int>(intSet.begin(), intSet.end());
+        return res;
+        
+        
+        
+    }
+        //第二种方法，利用partition分割函数,时间复杂度O（n）
+        /*
+        vector<int> res;
+        int size = input.size();
+        if(k > size)
+        {
+            return res;
+        }
+        int low = 0;
+        int high = size-1;
+        int index = partition(input, low, high);
+        while(index != k-1)
+        {
+            //二分法思想
+            if(index > k-1)
+            {
+                high = index - 1;
+                index = partition(input, low, high);
+            }
+            else
+            {
+                low = index + 1;
+                index = partition(input, low, high);
+            }
+        }
+
+        for(int i=0;i<k;i++)
+        {
+            res[i] = input[i];
+        }
+        return res;
+        
+    }
+        
+        //第一种，快速排序，再选择前k个数，时间复杂度O(nlongn)
+        vector<int> res;
+        int size = input.size();
+        if(k > size)
+        {
+            return res;
+        }
+        //接下来进行快排
+        quick_sort(input, 0, size-1);
+        for(int i=0;i<k;i++)
+        {
+            res.push_back(input[i]);
+        }
+        return res;
+    }
+    void quick_sort(vector<int> &input, int low, int high)
+    {
+        //基线条件
+        if(low >= high)
+        {
+            return;
+        }
+        int q = partition(input, low, high);//获得分区点
+        quick_sort(input, low, q-1);
+        quick_sort(input, q+1, high);
+    }
+        */
+    //分割函数
+        /*
+    int partition(vector<int> &input,int low,int high)
+    {
+        //输入容器的最后一个元素作为pivot,用它来对数组进行划分
+        int pivot = input[high];
+        int i = low;   //表示划分界限的位置
+        for(int j=low;j<high;j++)
+        {
+            if(input[j] < pivot)
+            {
+                //交换这两个值
+                int temp = input[j];
+                input[j] = input[i];
+                input[i] = temp;
+                i++;
+            }
+        }
+        int temp = input[high];
+        input[high] = input[i];
+        input[i] = temp;
+        return i;
+    }
+   */
+
+};

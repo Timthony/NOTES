@@ -1,0 +1,67 @@
+class Solution {
+public:
+    vector<int> minHeap;
+    vector<int> maxHeap;
+    //当一个数据按照当前数据个数的奇偶性应该插入到最大堆的时候，如果当前数值大于最小堆的最小值，
+    //如果将该数直接插入最大堆，上述条件2不满足，解决办法是现将该数插入最小堆，再将最小堆的最大值弹出并插入到最大堆；
+    //同理，当一个应该插入最小堆，但是其值小于最大堆的最大值的时候，处理思路一样。
+    void Insert(int num)
+    {
+        //如果之前是偶数个数据，插入最小堆
+        int data = (minHeap.size() + maxHeap.size())&1;
+        if(data == 0)
+        {
+            //如果当前的数据小于最大堆的首元素
+            if(!maxHeap.empty() && (num <= maxHeap[0]))
+            {
+                //back系列是操作容器元素添加和删除的方法，heap是堆排序的方法。
+                maxHeap.push_back(num);//push_back是往容器最后添加一个元素
+                push_heap(maxHeap.begin(), maxHeap.end(), less<int>());//push_heap是在容器添加一个元素后，将其堆排序，less（）对应最大堆排序，
+                pop_heap(maxHeap.begin(), maxHeap.end(), less<int>());//pop_heap是将当前容器的第一元素移到最后，并将剩余的元素堆排序。less（）对应最大堆排序
+                
+                num = *(maxHeap.end()-1);
+                maxHeap.pop_back(); //pop_back将一个容器的最后一个元素删除
+            }
+            //再向最小堆添加元素
+            minHeap.push_back(num);
+            push_heap(minHeap.begin(), minHeap.end(),greater<int>()); //最小堆
+            
+        }
+        //之前是奇数个数据，则将当前的元素插入到最大堆
+        else{
+            //如果当前元素大于最小堆的首元素
+            if(!minHeap.empty() && num >= minHeap[0])
+            {
+                minHeap.push_back(num);
+                push_heap(minHeap.begin(), minHeap.end(), greater<int>());//push_heap是在容器添加一个元素后，将其堆排序,greater()对应最小堆排序
+                
+                pop_heap(minHeap.begin(), minHeap.end(),greater<int>());//pop_heap是将当前容器的第一元素移到最后，并将剩余的元素堆排序。greater()对应最小堆排序，
+                num = *(minHeap.end()-1);
+                minHeap.pop_back();
+            }
+            maxHeap.push_back(num);
+            push_heap(maxHeap.begin(), maxHeap.end(), less<int>());
+        }
+    }
+
+    double GetMedian()
+    { 
+        //当当前总的数据个数是偶数的时候，直接取最大堆和最小堆的首元素的均值就是最后的中位数。
+        //如果是奇数，那么就与之前约定的插入的时候的顺序有关，这点需要对应起来。 
+        //偶数个数
+        if(((minHeap.size()+maxHeap.size())&1) == 0)
+        {
+            if(maxHeap.size()==0 || minHeap.size()==0)
+                return 0;
+            else
+                return (maxHeap[0]+minHeap[0])*1.0/2;
+        }
+        //奇数个数
+        else
+        {
+            return minHeap[0];
+        }
+    
+    }
+
+};

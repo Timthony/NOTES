@@ -1,0 +1,58 @@
+class Solution {
+public:
+    bool VerifySquenceOfBST(vector<int> sequence) {
+        //使用递归的思想，不断缩小问题，直到子树为空
+        int size = sequence.size();
+        if(size == 0)
+        {
+            return false;
+        }
+        if(size == 1)
+        {
+            return true;
+        }
+        return VerifySquenceOfBST_c(sequence, 0, size-1);
+    }
+    
+    bool VerifySquenceOfBST_c(vector<int> sequence, int low, int high) {
+        if(low == high) //基线条件， 此时，子树只有一个节点
+        {
+            return true;
+        }
+        //low最小的索引值，high最大的索引值
+        int root = sequence[high];
+        int i=low; 
+        //左子树索引值的范围，[0, i-1]
+        for(;i<high;i++)
+        {
+            if(sequence[i]>root)
+            {
+                break;
+            }
+        }
+        //左子树
+        int j = i;
+        for(;j<high;j++)
+        {
+            if(sequence[j] < root)
+            {
+                return false;
+            }
+        }
+        //递归条件，函数调用自己
+        //判断左子树是不是二叉搜索树
+        bool left = true;
+        if(i > 0)
+        {
+             left = VerifySquenceOfBST_c(sequence, low, i-1);
+        }
+        //判断右子树是不是二叉搜索树
+        bool right = true;
+        if(i<high)
+        {
+            right = VerifySquenceOfBST_c(sequence, i, high-1);
+        }
+        return (left&&right);
+
+    }
+};

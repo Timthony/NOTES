@@ -1,0 +1,85 @@
+/*
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+			val(x), next(NULL) {
+	}
+};*/
+class Solution {
+public:
+    ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
+        //第一种方法，循环两次
+        /*
+        if(pListHead == nullptr)
+        {
+            return nullptr;
+        }
+        int count = 0;//   链表的长度
+        ListNode *pNode = pListHead;
+        while(pNode != nullptr)
+        {
+            count++;
+            pNode = pNode->next;
+        }
+        //倒数第k个是索引为n-k，索引从0开始
+        ListNode *pNode2 = pListHead;
+        if(count >= k)
+        {
+            for(int i=0;i<count-k;i++)
+            {
+                pNode2 = pNode2->next;
+            }
+        }
+        else
+        {
+            return nullptr;
+        }
+        return pNode2;
+        */
+        //第二种方法，使用两个指针
+        if(pListHead == nullptr)
+        {
+            return nullptr;
+        }
+        ListNode *firstHead = pListHead;
+        ListNode *secBehind = pListHead;
+        
+        //第一个指针比第二个指针先走k-1步，当第一个指针指向最后一个节点时，第一个指针正好指向倒数第k个节点
+        for(int i=1;i<=k-1;i++)
+        {
+            if(firstHead->next != nullptr)
+            {
+                 firstHead = firstHead->next;
+            }
+            else
+            {
+                return nullptr;
+            }
+
+        }
+        while(firstHead->next != nullptr)
+        {
+            firstHead = firstHead->next;
+            secBehind = secBehind->next;
+        }
+        return secBehind;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+    }
+};

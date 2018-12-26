@@ -1,0 +1,77 @@
+/*
+struct ListNode {
+    int val;
+    struct ListNode *next;
+    ListNode(int x) :
+        val(x), next(NULL) {
+    }
+};
+*/
+class Solution {
+public:
+    //判断是否有环，设置两个指针，一快一慢，如果快的能追上慢的，那么就有环，如果快的指向为空指针那么没有环
+    ListNode *meetingNode(ListNode *pHead)
+    {
+        if(pHead == nullptr)
+        {
+            return nullptr;
+        }
+        ListNode *high = pHead->next;
+        ListNode *low = pHead;
+        if(high == nullptr)
+        {
+            return nullptr;
+        }
+        while(high != nullptr && low != nullptr)
+        {
+            if(high == low)
+            {
+                return high;           
+            }
+            low = low->next;
+            high = high->next;
+            if(high != nullptr)
+            {
+                high = high->next;
+            }
+        }
+        return nullptr;
+        
+    }
+    
+    ListNode* EntryNodeOfLoop(ListNode* pHead)
+    {
+        ListNode *meetNode = meetingNode(pHead); 
+        if(meetNode == nullptr)
+        {
+            return nullptr;
+        }
+        //求环中节点的数目
+        ListNode *pNode1 = meetNode;
+        //high和low是环内的一个点，所以从这个点开始，如果循环再回到这个点，那么所走过的步数就是环的长度
+        int countLoop = 1;
+        while(pNode1->next != meetNode)
+        {
+            pNode1 = pNode1->next;
+            countLoop++;
+        }
+        
+        ListNode *first = pHead;
+        ListNode *sec = pHead;
+        //先移动第一个节点，次数为环的节点数
+        for(int i =1;i<=countLoop;i++)
+        {
+            first = first->next;
+        }
+        //再同时移动，相遇的点就是入口
+        while(sec != first)
+        {
+            first = first->next;
+            sec = sec->next;
+        }
+        return first;
+
+        
+
+    }
+};

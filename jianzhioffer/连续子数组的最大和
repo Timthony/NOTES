@@ -1,0 +1,31 @@
+class Solution {
+public:
+    bool is_invalid = false;
+    int FindGreatestSumOfSubArray(vector<int> array) {
+        if(array.size() == 0)
+        {
+            is_invalid = true;
+            return 0;
+        }
+        is_invalid = false;
+        int cur_sum = 0;
+        int max_sum = 0x80000000;
+        for(int i=0;i<array.size();i++)
+        {
+            if(cur_sum <= 0)
+            {
+                 cur_sum = array[i];
+            }
+            else{
+                cur_sum = cur_sum + array[i];
+            }
+            if(max_sum < cur_sum)
+            {
+                max_sum = cur_sum;
+            }
+        }
+        return max_sum;
+        
+        
+    }
+};
