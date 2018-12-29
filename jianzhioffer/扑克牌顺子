@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool IsContinuous( vector<int> numbers ) {
+        if(numbers.size() == 0)    return false;
+        
+        sort(numbers.begin(), numbers.end());
+        
+        int numOf0 = 0;
+        
+        //统计数组中0的个数
+        for(int i=0;i<numbers.size();i++)
+        {
+            if(numbers[i] == 0)    
+            {
+                numOf0++;
+            }
+        }
+        int numOfGap = 0;
+        //统计数组中的间隔有几个
+        int small = numOf0;//从0以后的牌开始计算
+        int big = small+1;
+        while(big < numbers.size())
+        {
+            //两个数相等，有对子就不可能是顺子
+            if(numbers[small] == numbers[big])    return false;
+            numOfGap = numOfGap + (numbers[big] - numbers[small] -1);
+            small = big;
+            big++;
+        }
+        return (numOfGap > numOf0)?false:true;
+        
+    }
+};
