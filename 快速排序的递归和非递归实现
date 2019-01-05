@@ -1,0 +1,86 @@
+#include <iostream>
+#include<stack>
+using namespace std;
+
+
+int partition(int *a, int low, int high)
+{
+    int pivot = a[high];//取最后一位为锚点
+    int j = high;//保存一下最后一位的位置
+    while(low < high)
+    {
+        while(low<high && a[low] <= pivot)
+        {
+            ++low;
+        }
+        while(low < high && a[high] >= pivot)
+        {
+            --high;
+        }
+        int temp = a[high];
+        a[high] = a[low];
+        a[low] = temp;
+    }
+    a[j] = a[low];
+    a[low] = pivot;
+    return low;
+}
+
+void quick_sort(int *a, int low, int high)
+{
+    if(low >= high)    return;
+    int q = partition(a, low, high);
+    quick_sort(a, low, q-1);
+    quick_sort(a, q+1, high);
+}
+
+
+//非递归实现
+void Quick_sort(int *a, int low, int high)
+{
+    if(low >= high)
+    {
+        return;
+    }
+    stack<int> s;
+    s.push(low);
+    s.push(high);
+
+    while(!s.empty())
+    {
+        int high = s.top();
+        s.pop();
+        int low = s.top();
+        s.pop();
+
+        if(low < high)
+        {
+            int q = partition(a, low ,high);
+            //左区间
+            s.push(low);
+            s.push(q-1);
+            //右区间
+            s.push(q+1);
+            s.push(high);
+        }
+    }
+}
+
+
+
+
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    int a[] = {65,58,95,10,57,62,13,106,78,23,85};
+    Quick_sort(a, 0, 10);
+    //quick_sort(a, 0, 10);
+    for (int i = 0; i < 11; ++i) {
+        cout<<a[i]<<" ";
+
+    }
+    return 0;
+}
+//输出
+Hello, World!
+10 13 23 57 58 62 65 78 85 95 106 
+
