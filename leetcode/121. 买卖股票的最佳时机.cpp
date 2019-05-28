@@ -32,3 +32,29 @@ public:
 //         return max(maxprofit, 0);
     }
 };
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.size() == 0)  return 0;
+        int min_cur = prices[0];
+        int res=0; 
+        for(int i=1;i<prices.size();i++)
+        {
+            //遍历，记录当前的最小值，以及此时的差
+            if(prices[i] < min_cur)
+            {
+                min_cur = prices[i];
+            }
+            int profit = prices[i] - min_cur;
+            if(profit > res)
+            {
+                res = profit;
+            }
+           
+            
+        }
+        
+        return res;
+        
+    }
+};
